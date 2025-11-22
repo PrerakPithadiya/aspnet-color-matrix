@@ -1,0 +1,42 @@
+# Visual Studio / .NET
+bin/
+obj/
+.vs/
+.vscode/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.ide
+
+# Build outputs
+*.dll
+*.exe
+*.pdb
+
+# NuGet
+packages/
+*.nupkg
+
+# Publish output
+publish/
+
+# JetBrains Rider
+.idea/
+
+# Mac
+.DS_Store
+
+# Logs
+*.log
+
+# Runtime files
+*.pid
+*.seed
+
+# Dotnet user secrets
+secrets.json
+
+# Local appsettings (if you keep secrets locally)
+appsettings.Development.json

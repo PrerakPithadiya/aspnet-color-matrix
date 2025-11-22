@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebApplication1</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .form-radio:checked {
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCFGuPp1nFCghF7bB0WXAjr7INpbrFpvPEB986Ftroa1uOYHuNmSYck6e9OvhXzYLYvg7gwAovVRD-JEEsGzg3Ni4Cm4oa8ystD-MsPmJxDsEYTNViY56f7RPB5z_beMR3tzj2XcKrcgonjvcQ23APk_eud9HpXGwVGWjlMDvj8Afes0-X1f2D6MSn9nkwKrSfo5UKcuXHTDq4cFTy4WDnltaSN18C5nauNX1oC3xhXWuwIhQZW63lMeiPEBF9IerVOxuopPDzWYoMy);
+        }
+
+        #color-options-group label:has(input[value="random"]:checked)~label:has(input[value="custom"]) input[type="color"],
+        #color-options-group label:has(input[value="custom"]:not(:checked)) input[type="color"] {
+            visibility: hidden;
+        }
+    </style>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+    <div class="app-container">
+        <main role="main" class="page-wrapper">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,90 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Table Generator";
+}
+
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div class="w-full max-w-2xl">
+        <div class="mb-8 text-center">
+            <h1 class="text-4xl font-black leading-tight tracking-tighter text-gray-900 dark:text-white">Table Generator</h1>
+            <p class="mt-2 text-base text-gray-600 dark:text-gray-400">Customize your table dimensions and colors below.</p>
+        </div>
+
+        <div class="flex flex-col gap-8 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/40 p-6 sm:p-8">
+            <div>
+                <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">Table Dimensions</h2>
+                <div class="mt-4 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+                    <label class="flex flex-col">
+                        <span class="text-sm font-medium leading-normal pb-2 text-gray-700 dark:text-gray-300">Number of Rows</span>
+                        <input id="rows" name="rows" form="generatorForm" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 h-12 placeholder:text-gray-400 dark:placeholder:text-gray-500 px-4 text-base font-normal leading-normal" min="1" placeholder="e.g., 5" type="number" value="" />
+                    </label>
+                    <label class="flex flex-col">
+                        <span class="text-sm font-medium leading-normal pb-2 text-gray-700 dark:text-gray-300">Number of Columns</span>
+                        <input id="columns" name="columns" form="generatorForm" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 h-12 placeholder:text-gray-400 dark:placeholder:text-gray-500 px-4 text-base font-normal leading-normal" min="1" placeholder="e.g., 3" type="number" value="" />
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">Table Color</h2>
+                <div id="color-options-group" class="mt-4 flex flex-col gap-3">
+                    <label class="color-option flex cursor-pointer items-center gap-4 rounded-lg border border-gray-300 dark:border-gray-700 p-4 transition-all">
+                        <input class="form-radio h-5 w-5 appearance-none rounded-full border-2 border-gray-300 dark:border-gray-600 bg-transparent text-primary focus:ring-primary focus:ring-offset-0 dark:focus:ring-offset-gray-900" id="custom-color-radio" name="color-option" type="radio" value="custom" checked />
+                        <div class="flex grow items-center justify-between gap-4">
+                            <p class="text-sm font-medium leading-normal text-gray-800 dark:text-gray-200">Custom Color</p>
+                            <input id="customColor" class="h-8 w-14 cursor-pointer rounded border-none bg-transparent p-0" type="color" value="#137fec" />
+                        </div>
+                    </label>
+                    <label class="color-option flex cursor-pointer items-center gap-4 rounded-lg border border-gray-300 dark:border-gray-700 p-4 transition-all">
+                        <input class="form-radio h-5 w-5 appearance-none rounded-full border-2 border-gray-300 dark:border-gray-600 bg-transparent text-primary focus:ring-primary focus:ring-offset-0 dark:focus:ring-offset-gray-900" name="color-option" type="radio" value="random" />
+                        <div class="flex grow flex-col">
+                            <p class="text-sm font-medium leading-normal text-gray-800 dark:text-gray-200">Random Color</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="mt-2">
+                <form id="generatorForm" method="post">
+                    <button class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-base font-bold text-white transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
+                        <span class="material-symbols-outlined text-xl">grid_on</span>
+                        <span>Create Table</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Polyfill-style behavior for styling labels and showing/hiding the color input
+    (function(){
+        const group = document.getElementById('color-options-group');
+        if(!group) return;
+        const labels = Array.from(group.querySelectorAll('label'));
+        const radios = Array.from(group.querySelectorAll('input[type="radio"][name="color-option"]'));
+        const colorInput = document.getElementById('customColor');
+
+        function update() {
+            const checked = radios.find(r => r.checked);
+            labels.forEach(lbl => lbl.classList.remove('border-primary','bg-primary/10','dark:bg-primary/20'));
+            if(checked) {
+                const parent = checked.closest('label');
+                if(parent) parent.classList.add('border-primary','bg-primary/10','dark:bg-primary/20');
+            }
+            if(colorInput) {
+                const customRadio = radios.find(r => r.value === 'custom');
+                if(customRadio && customRadio.checked) {
+                    colorInput.style.visibility = '';
+                } else {
+                    colorInput.style.visibility = 'hidden';
+                }
+            }
+        }
+
+        radios.forEach(r => r.addEventListener('change', update));
+        // initial state
+        update();
+    })();
+</script>
