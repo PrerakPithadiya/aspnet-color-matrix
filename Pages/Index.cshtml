@@ -1,90 +1,154 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Table Generator";
+    ViewData["Title"] = "Create Dynamic Tables";
 }
 
-<div class="relative flex min-h-screen w-full flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
-    <div class="w-full max-w-2xl">
-        <div class="mb-8 text-center">
-            <h1 class="text-4xl font-black leading-tight tracking-tighter text-gray-900 dark:text-white">Table Generator</h1>
-            <p class="mt-2 text-base text-gray-600 dark:text-gray-400">Customize your table dimensions and colors below.</p>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" contenst="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 min-h-screen">
+    <div class="min-h-screen flex items-center justify-center p-6">
+        <div class="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
+            <!-- Left side - Hero section -->
+            <div class="space-y-6 text-center lg:text-left">
+                <div class="space-y-4">
+                    <h1 class="text-5xl lg:text-6xl tracking-tight text-white dark:text-primary">
+                        Create Dynamic
+                        <span class="block bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
+                            Tables
+                        </span>
+                    </h1>
+                    <p class="text-lg text-gray-200 dark:text-gray-300 max-w-lg">
+                        Build custom tables with precision control. Perfect for data
+                        visualization, prototyping, and enterprise applications.
+                    </p>
+                </div>
 
-        <div class="flex flex-col gap-8 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/40 p-6 sm:p-8">
-            <div>
-                <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">Table Dimensions</h2>
-                <div class="mt-4 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
-                    <label class="flex flex-col">
-                        <span class="text-sm font-medium leading-normal pb-2 text-gray-700 dark:text-gray-300">Number of Rows</span>
-                        <input id="rows" name="rows" form="generatorForm" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 h-12 placeholder:text-gray-400 dark:placeholder:text-gray-500 px-4 text-base font-normal leading-normal" min="1" placeholder="e.g., 5" type="number" value="" />
-                    </label>
-                    <label class="flex flex-col">
-                        <span class="text-sm font-medium leading-normal pb-2 text-gray-700 dark:text-gray-300">Number of Columns</span>
-                        <input id="columns" name="columns" form="generatorForm" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 h-12 placeholder:text-gray-400 dark:placeholder:text-gray-500 px-4 text-base font-normal leading-normal" min="1" placeholder="e.g., 3" type="number" value="" />
-                    </label>
+                <div class="grid grid-cols-2 gap-4 max-w-md mx-auto lg:mx-0">
+                    <div class="bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <svg class="w-6 h-6 text-blue-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16m-8-6v12"></path>
+                        </svg>
+                        <h3 class="text-sm text-slate-900 mb-1">Flexible Grid</h3>
+                        <p class="text-xs text-slate-600">Up to 50x50 cells</p>
+                    </div>
+                    <div class="bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <svg class="w-6 h-6 text-indigo-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                        </svg>
+                        <h3 class="text-sm text-slate-900 mb-1">Custom Colors</h3>
+                        <p class="text-xs text-slate-600">Full color control</p>
+                    </div>
                 </div>
             </div>
 
-            <div>
-                <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">Table Color</h2>
-                <div id="color-options-group" class="mt-4 flex flex-col gap-3">
-                    <label class="color-option flex cursor-pointer items-center gap-4 rounded-lg border border-gray-300 dark:border-gray-700 p-4 transition-all">
-                        <input class="form-radio h-5 w-5 appearance-none rounded-full border-2 border-gray-300 dark:border-gray-600 bg-transparent text-primary focus:ring-primary focus:ring-offset-0 dark:focus:ring-offset-gray-900" id="custom-color-radio" name="color-option" type="radio" value="custom" checked />
-                        <div class="flex grow items-center justify-between gap-4">
-                            <p class="text-sm font-medium leading-normal text-gray-800 dark:text-gray-200">Custom Color</p>
-                            <input id="customColor" class="h-8 w-14 cursor-pointer rounded border-none bg-transparent p-0" type="color" value="#137fec" />
+            <!-- Right side - Configuration card -->
+            <div class="border-0 shadow-2xl bg-white/95 backdrop-blur-sm rounded-2xl overflow-hidden">
+                <div class="space-y-3 pb-6 border-b border-slate-200 px-8 pt-8">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16m-8-6v12"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold text-slate-900">Configure Table</h2>
+                                <p class="text-sm text-slate-600">Set your table parameters</p>
+                            </div>
                         </div>
-                    </label>
-                    <label class="color-option flex cursor-pointer items-center gap-4 rounded-lg border border-gray-300 dark:border-gray-700 p-4 transition-all">
-                        <input class="form-radio h-5 w-5 appearance-none rounded-full border-2 border-gray-300 dark:border-gray-600 bg-transparent text-primary focus:ring-primary focus:ring-offset-0 dark:focus:ring-offset-gray-900" name="color-option" type="radio" value="random" />
-                        <div class="flex grow flex-col">
-                            <p class="text-sm font-medium leading-normal text-gray-800 dark:text-gray-200">Random Color</p>
-                        </div>
-                    </label>
+                    </div>
                 </div>
-            </div>
+                <div class="px-8 pb-8">
+                    <form id="generatorForm" method="post" class="space-y-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label for="rows" class="text-sm font-medium text-slate-700">Rows</label>
+                                <input id="rows" name="rows" type="number" min="1" max="50" value="5" placeholder="5" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all" />
+                            </div>
 
-            <div class="mt-2">
-                <form id="generatorForm" method="post">
-                    <button class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-base font-bold text-white transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
-                        <span class="material-symbols-outlined text-xl">grid_on</span>
-                        <span>Create Table</span>
-                    </button>
-                </form>
+                            <div class="space-y-2">
+                                <label for="columns" class="text-sm font-medium text-slate-700">Columns</label>
+                                <input id="columns" name="columns" type="number" min="1" max="50" value="5" placeholder="5" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all" />
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label class="text-sm font-medium text-slate-700">Color Configuration</label>
+                            <div class="space-y-3" id="color-options-group">
+                                <label class="color-option flex items-center space-x-3 p-4 rounded-lg border-2 border-slate-200 hover:border-blue-300 hover:bg-blue-50/50 transition-all cursor-pointer">
+                                    <input type="radio" name="colorOption" value="random" checked class="w-4 h-4 text-blue-600 border-slate-300 focus:ring-2 focus:ring-blue-500 cursor-pointer" />
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-slate-900">Random Color</p>
+                                        <p class="text-xs text-slate-600 mt-0.5">Generate a random color for each cell</p>
+                                    </div>
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </label>
+
+                                <label class="color-option flex items-center space-x-3 p-4 rounded-lg border-2 border-slate-200 hover:border-blue-300 hover:bg-blue-50/50 transition-all cursor-pointer">
+                                    <input type="radio" name="colorOption" value="custom" class="w-4 h-4 text-blue-600 border-slate-300 focus:ring-2 focus:ring-blue-500 cursor-pointer" />
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-slate-900">Custom Color</p>
+                                        <p class="text-xs text-slate-600 mt-0.5">Choose a specific color for all cells</p>
+                                    </div>
+                                    <input id="customColor" name="customColor" type="color" value="#3b82f6" class="w-10 h-10 rounded-lg border-0 cursor-pointer" style="visibility: hidden;" />
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 rounded-lg transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            <span>Create Table</span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    // Polyfill-style behavior for styling labels and showing/hiding the color input
-    (function(){
-        const group = document.getElementById('color-options-group');
-        if(!group) return;
-        const labels = Array.from(group.querySelectorAll('label'));
-        const radios = Array.from(group.querySelectorAll('input[type="radio"][name="color-option"]'));
-        const colorInput = document.getElementById('customColor');
+    <script>
+        (function() {
+            const group = document.getElementById('color-options-group');
+            if (!group) return;
+            const labels = Array.from(group.querySelectorAll('label'));
+            const radios = Array.from(group.querySelectorAll('input[type="radio"][name="colorOption"]'));
+            const colorInput = document.getElementById('customColor');
 
-        function update() {
-            const checked = radios.find(r => r.checked);
-            labels.forEach(lbl => lbl.classList.remove('border-primary','bg-primary/10','dark:bg-primary/20'));
-            if(checked) {
-                const parent = checked.closest('label');
-                if(parent) parent.classList.add('border-primary','bg-primary/10','dark:bg-primary/20');
-            }
-            if(colorInput) {
-                const customRadio = radios.find(r => r.value === 'custom');
-                if(customRadio && customRadio.checked) {
-                    colorInput.style.visibility = '';
-                } else {
-                    colorInput.style.visibility = 'hidden';
+            function update() {
+                const checked = radios.find(r => r.checked);
+                labels.forEach(lbl => lbl.classList.remove('border-blue-300', 'bg-blue-50'));
+                if (checked) {
+                    const parent = checked.closest('label');
+                    if (parent) parent.classList.add('border-blue-300', 'bg-blue-50');
+                }
+                if (colorInput) {
+                    const customRadio = radios.find(r => r.value === 'custom');
+                    if (customRadio && customRadio.checked) {
+                        colorInput.style.visibility = 'visible';
+                    } else {
+                        colorInput.style.visibility = 'hidden';
+                    }
                 }
             }
-        }
 
-        radios.forEach(r => r.addEventListener('change', update));
-        // initial state
-        update();
-    })();
-</script>
+            radios.forEach(r => r.addEventListener('change', update));
+            update();
+        })();
+    </script>
+</body>
+</html>

@@ -40,34 +40,72 @@ namespace WebApplication1.Pages
 
             if (ColorOption == "random")
             {
-                var random = new Random();
-                var usedColors = new HashSet<string>();
-                for (var i = 0; i < Rows; i++)
-                {
-                    for (var j = 0; j < Columns; j++)
-                    {
-                        string color;
-                        do
-                        {
-                            color = String.Format("#{0:X6}", random.Next(0x1000000));
-                        } while (usedColors.Contains(color));
-                        Colors[i, j] = color;
-                        usedColors.Add(color);
-                    }
-                }
+                FillRandomColors(Colors);
             }
             else
             {
-                for (var i = 0; i < Rows; i++)
-                {
-                    for (var j = 0; j < Columns; j++)
-                    {
-                        Colors[i, j] = CustomColor;
-                    }
-                }
+                FillCustomColor(Colors, CustomColor);
             }
             Debug.WriteLine("Colors array populated. Returning Page.");
             return Page();
+        }
+
+        public JsonResult OnGetRegen(int rows, int columns)
+        {
+            if (rows <= 0 || columns <= 0)
+            {
+                return new JsonResult(new { error = "Invalid dimensions" }) { StatusCode = 400 };
+            }
+
+            var colors = new string[rows][];
+            var rnd = new Random();
+            var used = new HashSet<string>();
+            for (var i = 0; i < rows; i++)
+            {
+                colors[i] = new string[columns];
+                for (var j = 0; j < columns; j++)
+                {
+                    string color;
+                    do
+                    {
+                        color = String.Format("#{0:X6}", rnd.Next(0x1000000));
+                    } while (used.Contains(color));
+                    colors[i][j] = color;
+                    used.Add(color);
+                }
+            }
+
+            return new JsonResult(new { colors });
+        }
+
+        private void FillRandomColors(string[,] target)
+        {
+            var random = new Random();
+            var usedColors = new HashSet<string>();
+            for (var i = 0; i < target.GetLength(0); i++)
+            {
+                for (var j = 0; j < target.GetLength(1); j++)
+                {
+                    string color;
+                    do
+                    {
+                        color = String.Format("#{0:X6}", random.Next(0x1000000));
+                    } while (usedColors.Contains(color));
+                    target[i, j] = color;
+                    usedColors.Add(color);
+                }
+            }
+        }
+
+        private void FillCustomColor(string[,] target, string? custom)
+        {
+            for (var i = 0; i < target.GetLength(0); i++)
+            {
+                for (var j = 0; j < target.GetLength(1); j++)
+                {
+                    target[i, j] = custom;
+                }
+            }
         }
     }
 }

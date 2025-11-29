@@ -1,50 +1,155 @@
 @page
 @model WebApplication1.Pages.TableModel
 @{
-        ViewData["Title"] = "Generated Table";
+    ViewData["Title"] = "Generated Table";
 }
 
-<div class="relative flex min-h-screen w-full flex-col">
-    <div class="layout-container flex h-full grow flex-col">
-        <div class="px-4 sm:px-10 lg:px-40 flex flex-1 justify-center py-5">
-            <div class="layout-content-container flex flex-col w-full max-w-[960px] flex-1">
-                <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-4 sm:px-10 py-3">
-                    <div class="flex items-center gap-4">
-                        <h2 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em]">Table Generator</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .color-cell {
+            transition: all 0.2s ease;
+        }
+        .color-cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 min-h-screen">
+    <div class="min-h-screen p-6 lg:p-8">
+        <div class="max-w-7xl mx-auto space-y-6">
+            <!-- Header section -->
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div class="space-y-2">
+                    <div class="flex items-center gap-3">
+                        <a href="@Url.Page("Index")" class="gap-2 bg-white/90 backdrop-blur-sm border border-slate-300 hover:bg-white shadow-sm flex items-center px-4 py-2 rounded-lg text-slate-700 font-medium transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            Back
+                        </a>
+                        <span class="bg-green-100 text-green-700 border-0 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                            </svg>
+                            Generated
+                        </span>
                     </div>
-                    <a class="flex items-center gap-2 min-w-[84px] max-w-[480px] cursor-pointer justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity" asp-page="Index">
-                        <span class="material-symbols-outlined text-base">arrow_back</span>
-                        <span class="truncate">Back to Main Page</span>
-                    </a>
-                </header>
+                        </h1>
+                    <div class="p-6">
+                    </div>
+                </div>
 
-                <main class="flex-grow flex flex-col">
-                    <h1 class="text-text-light dark:text-text-dark tracking-light text-[32px] font-bold leading-tight px-4 text-center pb-3 pt-6 sm:pt-10">Your Generated Table</h1>
+                <div class="flex flex-wrap gap-3"></div>
+            </div>
 
-                      <div class="px-4 py-3 container">
-                        <div class="flex overflow-hidden rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark">
-                            <table class="flex-1 w-full border-collapse">
-                                <tbody>
-                                    @if (Model.Colors != null)
-                                    {
-                                        @for (var i = 0; i < Model.Rows; i++)
-                                        {
-                                            <tr class="border-b border-b-border-light dark:border-b-border-dark">
-                                                @for (var j = 0; j < Model.Columns; j++)
-                                                {
-                                                    var bg = Model.Colors[i, j];
-                                                    <td class="p-0" style="background-color:@bg; width:@(100.0 / Model.Columns)%; height: calc(4rem + 0.5rem);"></td>
-                                                }
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+            <!-- Stats cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="p-4 bg-white/90 backdrop-blur-sm border border-slate-200 shadow-sm rounded-xl">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-slate-600">Total Cells</p>
+                            <p class="text-2xl text-slate-900 mt-1">@(Model.Rows * Model.Columns)</p>
+                        </div>
+                        <div class="p-3 bg-blue-100 rounded-lg">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
                         </div>
                     </div>
+                </div>
 
-                </main>
+                <div class="p-4 bg-white/90 backdrop-blur-sm border border-slate-200 shadow-sm rounded-xl">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-slate-600">Dimensions</p>
+                            <p class="text-2xl text-slate-900 mt-1">
+                                @Model.Rows × @Model.Columns
+                            </p>
+                        </div>
+                        <div class="p-3 bg-indigo-100 rounded-lg">
+                            <div class="w-5 h-5 grid grid-cols-2 gap-0.5">
+                                <div class="bg-indigo-600 rounded-sm"></div>
+                                <div class="bg-indigo-600 rounded-sm"></div>
+                                <div class="bg-indigo-600 rounded-sm"></div>
+                                <div class="bg-indigo-600 rounded-sm"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-white/90 backdrop-blur-sm border border-slate-200 shadow-sm rounded-xl">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-slate-600">Average Color</p>
+                            <p class="text-sm font-mono text-slate-900 mt-1">Mixed</p>
+                        </div>
+                        <div class="p-3 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-lg" style="background: linear-gradient(135deg, #60a5fa, #4f46e5);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table section -->
+            <div class="w-full flex justify-center">
+                <div class="bg-white/95 backdrop-blur-sm border-0 shadow-xl overflow-hidden rounded-2xl inline-block w-max">
+                <div class="p-6 border-b border-slate-200 bg-slate-50/50">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-lg text-slate-900">Data Table View</h2>
+                            <p class="text-sm text-slate-600 mt-0.5">
+                                Interactive grid display with @(Model.Rows * Model.Columns) cells
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="overflow-x-auto rounded-lg border border-slate-200 shadow-inner bg-white inline-block">
+                        <table class="border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-slate-200">
+                                    <th class="text-left text-xs text-slate-600 border-r border-slate-200 bg-slate-100 sticky left-0 w-16 h-16"></th>
+                                    @for (var j = 0; j < Model.Columns; j++)
+                                    {
+                                        <th class="text-center text-xs text-slate-600 w-20 h-16 border-r border-slate-200 last:border-r-0">
+                                            Col @(j + 1)
+                                        </th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Colors != null)
+                                {
+                                    @for (var i = 0; i < Model.Rows; i++)
+                                    {
+                                        <tr class="border-b border-slate-200 last:border-0 hover:opacity-90 transition-opacity">
+                                            <td class="text-xs text-slate-600 border-r border-slate-200 bg-slate-50 sticky left-0 w-16 h-20 flex items-center justify-center">
+                                                Row @(i + 1)
+                                            </td>
+                                            @for (var j = 0; j < Model.Columns; j++)
+                                            {
+                                                var bg = Model.Colors[i, j];
+                                                <td class="p-0 text-center relative w-20 h-20 border-r border-slate-200 last:border-r-0">
+                                                    <div class="color-cell w-full h-full transition-all" style="background-color: @bg;">
+                                                    </div>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</body>
+</html>
